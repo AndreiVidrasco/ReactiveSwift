@@ -240,7 +240,7 @@ class SignalSpec: QuickSpec {
 				it("should not crash allocating memory with a few observers") {
 					let (signal, observer) = Signal<Int, Never>.pipe()
 
-					#if os(Linux)
+                    #if os(Linux) || os(Android)
 						func autoreleasepool(invoking code: () -> Void) {
 							code()
 						}

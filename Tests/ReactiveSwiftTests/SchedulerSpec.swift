@@ -14,7 +14,7 @@ import Quick
 @testable
 import ReactiveSwift
 
-#if os(Linux)
+#if os(Linux) || os(Android)
 	import func CoreFoundation._CFIsMainThread
 
 	private extension Thread {

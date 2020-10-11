@@ -9,7 +9,7 @@
 import Dispatch
 import Foundation
 
-#if os(Linux)
+#if os(Linux) || os(Android)
 	import let CDispatch.NSEC_PER_SEC
 #endif
 
@@ -97,7 +97,7 @@ public final class UIScheduler: Scheduler {
 			                               value: dispatchSpecificValue)
 	}()
 
-	#if os(Linux)
+    #if os(Linux) || os(Android)
 	private var queueLength: Atomic<Int32> = Atomic(0)
 	#else
 	// `inout` references do not guarantee atomicity. Use `UnsafeMutablePointer`
@@ -158,7 +158,7 @@ public final class UIScheduler: Scheduler {
 	}
 
 	private func dequeue() {
-		#if os(Linux)
+        #if os(Linux) || os(Android)
 			queueLength.modify { $0 -= 1 }
 		#else
 			OSAtomicDecrement32(queueLength)
@@ -166,7 +166,7 @@ public final class UIScheduler: Scheduler {
 	}
 
 	private func enqueue() -> Int32 {
-		#if os(Linux)
+        #if os(Linux) || os(Android)
 		return queueLength.modify { value -> Int32 in
 			value += 1
 			return value
