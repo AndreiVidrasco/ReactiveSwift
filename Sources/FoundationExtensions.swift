@@ -12,7 +12,7 @@ import Foundation
 #endif
 import Dispatch
 
-#if os(Linux)
+#if os(Linux) || os(Android)
 	import let CDispatch.NSEC_PER_USEC
 	import let CDispatch.NSEC_PER_SEC
 #endif
